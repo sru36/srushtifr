@@ -1,0 +1,1981 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>prompt </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="405f6172-1d9f-80cf-b310-fbd11b99ddd1" class="page sans"><header><h1 class="page-title" dir="auto">prompt </h1><p class="page-description" dir="auto"></p></header><div class="page-body"><ol type="1" id="405f6172-1d9f-8074-9cdc-d0e19d5c173a" class="numbered-list" start="1" dir="auto"><li>i w ant to build a portfolio, of myself i am a btech student , of artificial intelligence and data sceinece 2028 batch my core intrest lies in design , frontend , data , ai , this is my existing portfolio : <a href="https://srushtifr.vercel.app/">https://srushtifr.vercel.app/</a> , i want my hero section as the following , follow my image 1 in the prompt , meet the developer and this tagline Architecting intelligent systems. Curating digital elegance.. along with my photograph cropped just like the refrence , jagarred line , also use attacheed stickers , of 5 face star , ballon 5 face star, 4 face star, disco ball </li></ol><figure id="405f6172-1d9f-806a-bffb-dab2eded5cee" class="image" data-notion-image="image.png" dir="ltr"><a href="image.png"><img style="width:703.968505859375px" src="image.png"/></a></figure><figure id="405f6172-1d9f-80da-84ab-c4b2a8e50dc8" class="image" data-notion-image="image%201.png" dir="ltr"><a href="image%201.png"><img style="width:463.99273681640625px" src="image%201.png"/></a></figure><figure id="405f6172-1d9f-8093-a94a-c029b4478998" class="image" data-notion-image="image%202.png" dir="ltr"><a href="image%202.png"><img style="width:583.9805908203125px" src="image%202.png"/></a></figure><figure id="405f6172-1d9f-8083-ad75-cfbdf41d6247" class="image" data-notion-image="image%203.png" dir="ltr"><a href="image%203.png"><img style="width:583.9805908203125px" src="image%203.png"/></a></figure><figure id="405f6172-1d9f-80fe-91d6-c3b173057a31" class="image" data-notion-image="image%204.png" dir="ltr"><a href="image%204.png"><img style="width:685.9951782226562px" src="image%204.png"/></a></figure><p id="405f6172-1d9f-80ab-adba-e2f077a9bded" class="" dir="auto">,my photograph </p><figure id="405f6172-1d9f-80fc-b694-cfc0998323da" class="image" data-notion-image="image%205.png" dir="ltr"><a href="image%205.png"><img style="width:454.9878845214844px" src="image%205.png"/></a></figure><p id="405f6172-1d9f-80d9-8344-d00cb6976a0e" class="" dir="auto">now i want next section as about me , (leave a space for one more photograph of mine and section should look somthing like this (attached about myself ss) it should have empty space for film photobooth strips frames of left hand side and right hand side should have the following text <br/>title : Hello!<br/>textbody : </p><p id="405f6172-1d9f-8083-beec-d7e8f56962ff" class="" dir="auto">I’m Srushti.</p><p id="405f6172-1d9f-803f-805e-fa39a2268372" class="" dir="auto">My path into tech started early, fueled by a 12-year-old’s fascination with engineering, and has evolved into a disciplined pursuit of building things that matter. As a frontend developer and AI &amp; Data Science undergraduate, I operate at the intersection of rigorous logic and intuitive design—translating complex data and abstract concepts into seamless digital experiences.</p><p id="405f6172-1d9f-8051-98c7-e18d0dc0b4bc" class="" dir="auto">When I’m not shipping code or refining architectures, you’ll find me writing, illustrating, editing, or exploring the creative side of media. I live comfortably in the space between git commits and generative AI, believing that structure and intuition aren&#x27;t opposites, but fuel.</p><figure id="405f6172-1d9f-80a5-bb4e-ca7e8a8db996" class="image" data-notion-image="image%206.png" dir="ltr"><a href="image%206.png"><img style="width:668.9805908203125px" src="image%206.png"/></a></figure><ol type="1" id="405f6172-1d9f-80e7-917a-fbe8418b1f16" class="numbered-list" start="2" dir="auto"><li>next should be tech stack which should be exactly this component : </li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js" integrity="sha512-uOw7XYETzS/DPmmirpP5UCMihSDNMeyTS965J0/456OSPfxn9xEtHHjj5Q/5WefVdqyMfN/afmQnNpZd/tpkcA==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js" integrity="sha512-xjGCJ9YxyZBfYTCHsEjkOZMoOse1W3cKMXv1szXrxs68myuXt0YTj3/xKPar6iDMlXzTUSEqwUxprWcyp+plaw==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="405f6172-1d9f-80cd-bce3-f6bfa0e22ad5" class="code code-wrap" data-notion-code-syntax="tsx"><code class="language-tsx" style="white-space:pre-wrap;word-break:break-all">&quot;use client&quot;;
+
+import { motion, useScroll, useTransform } from &quot;framer-motion&quot;;
+import ReactLenis from &quot;lenis/react&quot;;
+import React, { useRef } from &quot;react&quot;;
+
+import { cn } from &quot;@/lib/utils&quot;;
+
+type CharacterProps = {
+  char: string;
+  index: number;
+  centerIndex: number;
+  scrollYProgress: any;
+};
+
+const CharacterV1 = ({
+  char,
+  index,
+  centerIndex,
+  scrollYProgress,
+}: CharacterProps) =&gt; {
+  const isSpace = char === &quot; &quot;;
+
+  const distanceFromCenter = index - centerIndex;
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    [distanceFromCenter * 50, 0],
+  );
+  const rotateX = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    [distanceFromCenter * 50, 0],
+  );
+
+  return (
+    &lt;motion.span
+      className={cn(&quot;inline-block text-orange-500&quot;, isSpace &amp;&amp; &quot;w-4&quot;)}
+      style={{
+        x,
+        rotateX,
+      }}
+    &gt;
+      {char}
+    &lt;/motion.span&gt;
+  );
+};
+const CharacterV2 = ({
+  char,
+  index,
+  centerIndex,
+  scrollYProgress,
+}: CharacterProps) =&gt; {
+  const isSpace = char === &quot; &quot;;
+  const distanceFromCenter = index - centerIndex;
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    [distanceFromCenter * 50, 0],
+  );
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.75, 1]);
+
+  const y = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    [Math.abs(distanceFromCenter) * 50, 0],
+  );
+
+  return (
+    &lt;motion.img
+      src={char}
+      className={cn(&quot;inline-block&quot;, isSpace &amp;&amp; &quot;w-4&quot;)}
+      style={{
+        x,
+        scale,
+        y,
+        transformOrigin: &quot;center&quot;,
+      }}
+    /&gt;
+  );
+};
+const CharacterV3 = ({
+  char,
+  index,
+  centerIndex,
+  scrollYProgress,
+}: CharacterProps) =&gt; {
+  const isSpace = char === &quot; &quot;;
+  const distanceFromCenter = index - centerIndex;
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    [distanceFromCenter * 90, 0],
+  );
+  const rotate = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    [distanceFromCenter * 50, 0],
+  );
+
+  const y = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    [-Math.abs(distanceFromCenter) * 20, 0],
+  );
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.75, 1]);
+
+  return (
+    &lt;motion.img
+      src={char}
+      className={cn(&quot;inline-block&quot;, isSpace &amp;&amp; &quot;w-4&quot;)}
+      style={{
+        x,
+        rotate,
+        y,
+        scale,
+        transformOrigin: &quot;center&quot;,
+      }}
+    /&gt;
+  );
+};
+
+const Skiper31 = () =&gt; {
+  const targetRef = useRef&lt;HTMLDivElement | null&gt;(null);
+  const targetRef2 = useRef&lt;HTMLDivElement | null&gt;(null);
+  const targetRef3 = useRef&lt;HTMLDivElement | null&gt;(null);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
+  const { scrollYProgress: scrollYProgress2 } = useScroll({
+    target: targetRef2,
+  });
+  const { scrollYProgress: scrollYProgress3 } = useScroll({
+    target: targetRef3,
+  });
+
+  const text = &quot;see more from gxuri&quot;;
+  const characters = text.split(&quot;&quot;);
+  const centerIndex = Math.floor(characters.length / 2);
+
+  const macIcon = [
+    &quot;/mac/Discord.png&quot;,
+    &quot;/mac/figma.png&quot;,
+    &quot;/mac/Framer.png&quot;,
+    &quot;/mac/Github.png&quot;,
+    &quot;/mac/Monog.png&quot;,
+    &quot;/mac/notion.png&quot;,
+    &quot;/mac/Pieces.png&quot;,
+    &quot;/mac/Postman.png&quot;,
+    &quot;/mac/vsCode.png&quot;,
+  ];
+  const iconCenterIndex = Math.floor(macIcon.length / 2);
+
+  return (
+    &lt;ReactLenis root&gt;
+      &lt;main className=&quot;w-full bg-white&quot;&gt;
+        &lt;div className=&quot;top-22 absolute left-1/2 z-10 grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-black&quot;&gt;
+          &lt;span className=&quot;relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-[#f5f4f3] after:to-black after:content-[&#x27;&#x27;]&quot;&gt;
+            Scroll to see more
+          &lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div
+          ref={targetRef}
+          className=&quot;relative box-border flex h-[210vh] items-center justify-center gap-[2vw] overflow-hidden bg-[#f5f4f3] p-[2vw]&quot;
+        &gt;
+          &lt;div
+            className=&quot;font-geist w-full max-w-4xl text-center text-6xl font-bold uppercase tracking-tighter text-black&quot;
+            style={{
+              perspective: &quot;500px&quot;,
+            }}
+          &gt;
+            {characters.map((char, index) =&gt; (
+              &lt;CharacterV1
+                key={index}
+                char={char}
+                index={index}
+                centerIndex={centerIndex}
+                scrollYProgress={scrollYProgress}
+              /&gt;
+            ))}
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div
+          ref={targetRef2}
+          className=&quot;relative -mt-[100vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-[#f5f4f3] p-[2vw]&quot;
+        &gt;
+          &lt;p className=&quot;font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black&quot;&gt;
+            &lt;Bracket className=&quot;h-12 text-black&quot; /&gt;
+            &lt;span className=&quot;font-geist font-medium&quot;&gt;
+              intergrate with your fav tech stack
+            &lt;/span&gt;
+            &lt;Bracket className=&quot;h-12 scale-x-[-1] text-black&quot; /&gt;
+          &lt;/p&gt;
+          &lt;div className=&quot;font-geist w-full max-w-4xl text-center text-6xl font-bold uppercase tracking-tighter text-black&quot;&gt;
+            {macIcon.map((char, index) =&gt; (
+              &lt;CharacterV2
+                key={index}
+                char={char}
+                index={index}
+                centerIndex={iconCenterIndex}
+                scrollYProgress={scrollYProgress2}
+              /&gt;
+            ))}
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div
+          ref={targetRef3}
+          className=&quot;relative -mt-[95vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-[#f5f4f3] p-[2vw]&quot;
+        &gt;
+          {&quot; &quot;}
+          &lt;p className=&quot;font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black&quot;&gt;
+            &lt;Bracket className=&quot;h-12 text-black&quot; /&gt;
+            &lt;span className=&quot;font-geist font-medium&quot;&gt;
+              intergrate with your fav tech stack
+            &lt;/span&gt;
+            &lt;Bracket className=&quot;h-12 scale-x-[-1] text-black&quot; /&gt;
+          &lt;/p&gt;
+          &lt;div
+            className=&quot;font-geist w-full max-w-4xl text-center text-6xl font-bold uppercase tracking-tighter text-black&quot;
+            style={{
+              perspective: &quot;500px&quot;,
+            }}
+          &gt;
+            {macIcon.map((char, index) =&gt; (
+              &lt;CharacterV3
+                key={index}
+                char={char}
+                index={index}
+                centerIndex={iconCenterIndex}
+                scrollYProgress={scrollYProgress3}
+              /&gt;
+            ))}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/main&gt;
+    &lt;/ReactLenis&gt;
+  );
+};
+
+export { CharacterV1, CharacterV2, CharacterV3, Skiper31 };
+
+const Bracket = ({ className }: { className: string }) =&gt; {
+  return (
+    &lt;svg
+      xmlns=&quot;http://www.w3.org/2000/svg&quot;
+      fill=&quot;none&quot;
+      viewBox=&quot;0 0 27 78&quot;
+      className={className}
+    &gt;
+      &lt;path
+        fill=&quot;#000&quot;
+        d=&quot;M26.52 77.21h-5.75c-6.83 0-12.38-5.56-12.38-12.38V48.38C8.39 43.76 4.63 40 .01 40v-4c4.62 0 8.38-3.76 8.38-8.38V12.4C8.38 5.56 13.94 0 20.77 0h5.75v4h-5.75c-4.62 0-8.38 3.76-8.38 8.38V27.6c0 4.34-2.25 8.17-5.64 10.38 3.39 2.21 5.64 6.04 5.64 10.38v16.45c0 4.62 3.76 8.38 8.38 8.38h5.75v4.02Z&quot;
+      &gt;&lt;/path&gt;
+    &lt;/svg&gt;
+  );
+};
+
+/**
+ * Skiper 31 ScrollAnimation_002 — React + framer motion + lenis
+ *
+ * License &amp; Usage:
+ * - Free to use and modify in both personal and commercial projects.
+ * - Attribution to Skiper UI is required when using the free version.
+ * - No attribution required with Skiper UI Pro.
+ *
+ * Feedback and contributions are welcome.
+ *
+ * Author: @gurvinder-singh02
+ * Website: https://gxuri.me
+ * Twitter: https://x.com/Gur__vi
+ */
+</code></pre><p id="405f6172-1d9f-800b-b324-cb788131f61f" class="" dir="auto">if you do not have logos use , anything for now , or ask me for loogos , this is my tech stack </p><h3 id="405f6172-1d9f-80b7-8068-ccbdda5703cb" class="" dir="auto"><strong>Programming Languages</strong></h3><p id="405f6172-1d9f-807a-b7d3-ca12ec1517f8" class="" dir="auto">PythonC++TypeScriptJavaScriptJavaHTML5CSS3SQL</p><h3 id="405f6172-1d9f-80a4-8b66-c24b9271fa64" class="" dir="auto"><strong>Frameworks &amp; Libraries</strong></h3><p id="405f6172-1d9f-803d-91e1-e63576d71ef0" class="" dir="auto">ReactNext.jsNode.jsExpressViteTailwind CSS</p><h3 id="405f6172-1d9f-804d-88e3-fde146d9960b" class="" dir="auto"><strong>Databases</strong></h3><p id="405f6172-1d9f-80d1-8208-e09d63f56be4" class="" dir="auto">MySQLMongoDBPostgreSQLSupabase</p><h3 id="405f6172-1d9f-804c-ac37-d6c73a380ff5" class="" dir="auto"><strong>Tools &amp; Others</strong></h3><p id="405f6172-1d9f-80d1-a761-f532d15663fd" class="" dir="auto">Git &amp; GitHubVS CodeFigmaCanvanpmNetlifyVercelResponsive DesignOOPData StructuresAlgorithmsData ScienceMachine LearningDeep LearningData Engineering</p><ol type="1" id="405f6172-1d9f-807c-8952-cc0a10940591" class="numbered-list" start="3" dir="auto"><li>after this it should have a projects section : <br/>as follows <br/>use this following component :<br/><br/></li></ol><p id="406f6172-1d9f-80c9-8521-de187f249300" class="" dir="auto">Add the &quot;Prism Carousel&quot; component from React Bits Pro to my project.</p><p id="406f6172-1d9f-809d-a4e2-e88c5624c884" class="" dir="auto">A coverflow that sweeps color into each new image</p><p id="406f6172-1d9f-802a-aa3e-d9bacfde0fd9" class="" dir="auto">Steps:</p><ol type="1" id="406f6172-1d9f-8035-a8db-d6b5bd1e7073" class="numbered-list" start="1" dir="auto"><li>Ensure my components.json has the React Bits Pro registries configured (see <a href="https://pro.reactbits.dev/docs/installation">https://pro.reactbits.dev/docs/installation</a>), including the Authorization header with my REACTBITS_LICENSE_KEY environment variable.</li></ol><ol type="1" id="406f6172-1d9f-80c1-bf36-f200ad8bee21" class="numbered-list" start="2" dir="auto"><li>Install the component with:<br/>npx shadcn@latest add @reactbits-starter/prism-carousel-tw</li></ol><ol type="1" id="406f6172-1d9f-80ad-ab85-fac7e13f1168" class="numbered-list" start="3" dir="auto"><li>Import it where needed and adapt it to my project&#x27;s content and design tokens.</li></ol><p id="406f6172-1d9f-8022-b5c2-e4f6df1114bd" class="" dir="auto">Docs page for reference: <a href="https://pro.reactbits.dev/docs/components/prism-carousel">https://pro.reactbits.dev/docs/components/prism-carousel</a></p><p id="405f6172-1d9f-808c-bec3-cdf7c4a975ed" class="" dir="auto"><br/>5. it should have a graphics section now in which i showcase my graphics usse the following code for it <br/></p><pre id="406f6172-1d9f-80dd-badd-c48662efa98e" class="code code-wrap" data-notion-code-syntax="tsx"><code class="language-tsx" style="white-space:pre-wrap;word-break:break-all">&quot;use client&quot;;
+
+import { motion } from &quot;framer-motion&quot;;
+import { ChevronLeftIcon, ChevronRightIcon } from &quot;lucide-react&quot;;
+import React from &quot;react&quot;;
+import {
+  Autoplay,
+  EffectCoverflow,
+  Navigation,
+  Pagination,
+} from &quot;swiper/modules&quot;;
+import { Swiper, SwiperSlide } from &quot;swiper/react&quot;;
+import &quot;swiper/css/effect-coverflow&quot;;
+import &quot;swiper/css/pagination&quot;;
+import &quot;swiper/css/navigation&quot;;
+import &quot;swiper/css&quot;;
+import &quot;swiper/css/effect-cards&quot;;
+
+import { cn } from &quot;@/lib/utils&quot;;
+
+const Skiper49 = () =&gt; {
+  const images = [
+    {
+      src: &quot;/images/x.com/13.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/32.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/20.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/21.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/19.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/1.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/2.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/3.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/4.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/5.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+    {
+      src: &quot;/images/x.com/6.jpeg&quot;,
+      alt: &quot;Illustrations by my fav AarzooAly&quot;,
+    },
+  ];
+
+  return (
+    &lt;div className=&quot;flex h-full w-full items-center justify-center overflow-hidden bg-[#f5f4f3]&quot;&gt;
+      &lt;Carousel_003 className=&quot;&quot; images={images} showPagination loop /&gt;
+    &lt;/div&gt;
+  );
+};
+
+export { Skiper49 };
+
+const Carousel_003 = ({
+  images,
+  className,
+  showPagination = false,
+  showNavigation = false,
+  loop = true,
+  autoplay = false,
+  spaceBetween = 0,
+}: {
+  images: { src: string; alt: string }[];
+  className?: string;
+  showPagination?: boolean;
+  showNavigation?: boolean;
+  loop?: boolean;
+  autoplay?: boolean;
+  spaceBetween?: number;
+}) =&gt; {
+  const css = `
+  .Carousal_003 {
+    width: 100%;
+    height: 350px;
+    padding-bottom: 50px !important;
+  }
+  
+  .Carousal_003 .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: #000 !important;
+  }
+
+`;
+  return (
+    &lt;motion.div
+      initial={{ opacity: 0, translateY: 20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{
+        duration: 0.3,
+        delay: 0.5,
+      }}
+      className={cn(&quot;relative w-full max-w-4xl px-5&quot;, className)}
+    &gt;
+      &lt;style&gt;{css}&lt;/style&gt;
+
+      &lt;motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className=&quot;w-full&quot;
+      &gt;
+        &lt;Swiper
+          spaceBetween={spaceBetween}
+          autoplay={
+            autoplay
+              ? {
+                  delay: 1500,
+                  disableOnInteraction: true,
+                }
+              : false
+          }
+          effect=&quot;coverflow&quot;
+          grabCursor={true}
+          slidesPerView=&quot;auto&quot;
+          centeredSlides={true}
+          loop={loop}
+          coverflowEffect={{
+            rotate: 40,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+          pagination={
+            showPagination
+              ? {
+                  clickable: true,
+                }
+              : false
+          }
+          navigation={
+            showNavigation
+              ? {
+                  nextEl: &quot;.swiper-button-next&quot;,
+                  prevEl: &quot;.swiper-button-prev&quot;,
+                }
+              : false
+          }
+          className=&quot;Carousal_003&quot;
+          modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
+        &gt;
+          {images.map((image, index) =&gt; (
+            &lt;SwiperSlide key={index} className=&quot;&quot;&gt;
+              &lt;img
+                className=&quot;h-full w-full object-cover&quot;
+                src={image.src}
+                alt={image.alt}
+              /&gt;
+            &lt;/SwiperSlide&gt;
+          ))}
+          {showNavigation &amp;&amp; (
+            &lt;div&gt;
+              &lt;div className=&quot;swiper-button-next after:hidden&quot;&gt;
+                &lt;ChevronRightIcon className=&quot;h-6 w-6 text-white&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div className=&quot;swiper-button-prev after:hidden&quot;&gt;
+                &lt;ChevronLeftIcon className=&quot;h-6 w-6 text-white&quot; /&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          )}
+        &lt;/Swiper&gt;
+      &lt;/motion.div&gt;
+    &lt;/motion.div&gt;
+  );
+};
+
+export { Carousel_003 };
+
+/**
+ * Skiper 49 Carousel_003 — React + Swiper
+ * Built with Swiper.js - Read docs to learn more https://swiperjs.com/
+ * Illustrations by AarzooAly - https://x.com/AarzooAly
+ *
+ * License &amp; Usage:
+ * - Free to use and modify in both personal and commercial projects.
+ * - Attribution to Skiper UI is required when using the free version.
+ * - No attribution required with Skiper UI Pro.
+ *
+ * Feedback and contributions are welcome.
+ *
+ * Author: @gurvinder-singh02
+ * Website: https://gxuri.me
+ * Twitter: https://x.com/Gur__vi
+ */
+</code></pre><p id="406f6172-1d9f-80b3-ac45-c82bd6b1dd23" class="" dir="auto">
+</p><p id="406f6172-1d9f-8048-a670-f9bbcfb65d42" class="" dir="auto"><div class="indented"><p id="405f6172-1d9f-800f-8d2a-d6cdb0e034e5" class="" dir="auto"><br/><br/><br/><br/><br/><br/>6. lastlymy footer section should be this compoment : use the color pallet colors instead of default organge or default tone color , use my color pallet colors for this ask whatsoever data u need more for footer this is my footer data:<br/>github id : <a href="https://github.com/sru36">sru36 (Srushti)</a> https://github.com/sru36/<br/>linkedin : <a href="https://www.linkedin.com/in/srushtirawal/">https://www.linkedin.com/in/srushtirawal/</a><br/>x : <a href="https://x.com/sruxcx">X</a> https://srushtifr.vercel.app<br/>emial id  : SRUU36@GMAIL.COM<br/></p></div></p><pre id="406f6172-1d9f-8058-bda1-ce71c35b319e" class="code code-wrap" data-notion-code-syntax="tsx"><code class="language-tsx" style="white-space:pre-wrap;word-break:break-all"></code></pre><pre id="405f6172-1d9f-80ef-86b0-cf82033defc4" class="code code-wrap" data-notion-code-syntax="tsx"><code class="language-tsx" style="white-space:pre-wrap;word-break:break-all">&quot;use client&quot;
+
+// Halftone Wordmark Footer — a site footer whose wordmark is set enormous and
+// cropped by the bottom edge, printed as a field of halftone dots. Each dot is
+// sized by how much of the letter covers its cell, so the type keeps its edges
+// at any scale. Move across it and the dots part around the pointer on springs,
+// warming in colour as they are pushed off their place; click and a shock ring
+// runs through the word. Above it sit the studio line, tracked link columns and
+// a back-to-top, separated by a hairline, all over a fine print grain.
+//
+// One file, React only. A 2D canvas for the dots and the grain, real anchors
+// for the links. Every rule in the scoped &lt;style&gt; is .hwf- prefixed and nothing
+// is fetched: the faces come from the host page or the fallback stacks.
+
+import * as React from &quot;react&quot;
+
+export interface HalftonePalette {
+  /** The footer background. */
+  background: string
+  /** The dots at rest, and the text. */
+  ink: string
+  /** The colour a dot warms toward as it is pushed off its place. */
+  warm: string
+}
+
+export type HalftonePreset = &quot;night&quot; | &quot;paper&quot; | &quot;ember&quot; | &quot;cobalt&quot;
+
+export interface FooterLink {
+  label: string
+  href?: string
+}
+
+export interface FooterColumn {
+  title: string
+  links: FooterLink[]
+}
+
+export interface HalftoneWordmarkFooterProps {
+  /** The giant word printed in dots. Lowercase reads best. */
+  wordmark?: string
+  /** Top-left studio line. */
+  label?: string
+  /** The muted line under it. */
+  meta?: string
+  /** Link columns along the top. */
+  columns?: FooterColumn[]
+  /** Show the back-to-top link. It scrolls the window to 0. Defaults to true. */
+  backToTop?: boolean
+  /** Starting colours. Defaults to &quot;night&quot;. */
+  preset?: HalftonePreset
+  /** Colour overrides, merged over the preset. */
+  palette?: { background?: string; ink?: string; warm?: string }
+  /** Distance between dot centres, in CSS px. Defaults to 6. */
+  dotGap?: number
+  /** How far the pointer pushes, in CSS px. Defaults to 80. */
+  radius?: number
+  /** How much of the word&#x27;s cap height hangs below the bottom edge, 0–0.6. Defaults to 0.2. */
+  crop?: number
+  /** Print grain over everything, 0–1. Defaults to 0.5. */
+  grain?: number
+  /** Pointer and click response. Defaults to true. */
+  interactive?: boolean
+  /** Face for the wordmark. Heavy grotesks print best. */
+  fontFamily?: string
+  /** Weight of the wordmark. Defaults to 800. */
+  fontWeight?: number
+  /** Face for the small type. */
+  monoFamily?: string
+  /** Root height. A definite length, never a percentage. */
+  height?: string
+  /** Extra root class names. */
+  className?: string
+}
+
+const PRESETS: { [K in HalftonePreset]: HalftonePalette } = {
+  night: { background: &quot;#0c0c0b&quot;, ink: &quot;#e9e4da&quot;, warm: &quot;#e9762b&quot; },
+  paper: { background: &quot;#efebe3&quot;, ink: &quot;#17150f&quot;, warm: &quot;#c2361c&quot; },
+  ember: { background: &quot;#160a06&quot;, ink: &quot;#f2c48c&quot;, warm: &quot;#ff5a1f&quot; },
+  cobalt: { background: &quot;#0d1b4d&quot;, ink: &quot;#dfe7ff&quot;, warm: &quot;#ffcd3c&quot; },
+}
+
+const DEFAULT_COLUMNS: FooterColumn[] = [
+  { title: &quot;Work&quot;, links: [{ label: &quot;Index&quot; }, { label: &quot;Archive&quot; }, { label: &quot;Journal&quot; }] },
+  { title: &quot;Studio&quot;, links: [{ label: &quot;About&quot; }, { label: &quot;Process&quot; }, { label: &quot;Careers&quot; }] },
+  { title: &quot;Contact&quot;, links: [{ label: &quot;hello@halden.co&quot; }, { label: &quot;+47 22 00 41 00&quot; }] },
+]
+
+const SANS_STACK = &#x27;&quot;Inter Tight&quot;, &quot;Inter Variable&quot;, &quot;Inter&quot;, &quot;Helvetica Neue&quot;, Arial, system-ui, sans-serif&#x27;
+const MONO_STACK = &#x27;&quot;JetBrains Mono&quot;, &quot;SF Mono&quot;, ui-monospace, Menlo, Consolas, monospace&#x27;
+
+// #region halftone
+// Pure helpers, lifted out and executed by tests/halftone-wordmark-footer.test.mjs.
+
+/** Hex → [r, g, b] in 0–255, or null for anything that isn&#x27;t #rgb / #rrggbb. */
+export function hwfHex(hex: string) {
+  const m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec((hex || &quot;&quot;).trim())
+  if (!m) return null
+  const h = m[1].length === 3 ? m[1].split(&quot;&quot;).map((c) =&gt; c + c).join(&quot;&quot;) : m[1]
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]
+}
+
+/** Dot radius for a cell coverage in [0, 1]: area-true, so tone stays even. */
+export function hwfRadius(coverage: number, gap: number) {
+  const c = coverage &lt; 0 ? 0 : coverage &gt; 1 ? 1 : coverage
+  return Math.sqrt(c) * gap * 0.56
+}
+
+/**
+ * One step of a dot&#x27;s spring back to home, plus the push from a pointer at
+ * (px, py) within radius r. Returns [x, y, vx, vy]. Away from the pointer a
+ * displaced dot always heads home and comes to rest.
+ */
+export function hwfStep(
+  x: number, y: number, vx: number, vy: number,
+  hx: number, hy: number, px: number, py: number, r: number,
+) {
+  const dx = x - px
+  const dy = y - py
+  const d2 = dx * dx + dy * dy
+  if (r &gt; 0 &amp;&amp; d2 &lt; r * r) {
+    const d = Math.sqrt(d2) + 0.001
+    const f = (1 - d / r) * 2.6
+    vx += (dx / d) * f
+    vy += (dy / d) * f
+  }
+  vx = (vx + (hx - x) * 0.05) * 0.84
+  vy = (vy + (hy - y) * 0.05) * 0.84
+  return [x + vx, y + vy, vx, vy]
+}
+
+/** How warm a dot is drawn: 0 at home, 1 once it is `span` px or more away. */
+export function hwfWarmth(x: number, y: number, hx: number, hy: number, span: number) {
+  const d = Math.hypot(x - hx, y - hy)
+  return span &gt; 0 ? Math.min(1, d / span) : 0
+}
+
+/** Font size that sets `measured` (width at 100px) to fill `width` exactly. */
+export function hwfFitSize(measured: number, width: number) {
+  return measured &gt; 0 ? (width / measured) * 100 : 0
+}
+// #endregion
+
+const HWF_CSS = `
+.hwf-root {
+  position: relative; width: 100%; overflow: hidden; isolation: isolate;
+  background: var(--hwf-bg); color: var(--hwf-ink); -webkit-font-smoothing: antialiased;
+}
+.hwf-root canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; }
+.hwf-top {
+  position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
+  gap: 24px; padding: clamp(22px, 3.4vw, 40px) clamp(20px, 3.4vw, 44px) 0;
+  font-family: var(--hwf-mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; line-height: 1.75;
+}
+.hwf-brand strong { display: block; font-weight: 500; }
+.hwf-brand span { opacity: .45; }
+.hwf-col h3 { margin: 0; font: inherit; opacity: .4; font-weight: 500; }
+.hwf-col ul { list-style: none; margin: 0; padding: 0; }
+.hwf-col a, .hwf-up {
+  color: inherit; text-decoration: none; opacity: .78; background: none; border: 0; padding: 0;
+  font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer;
+  background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px;
+  background-repeat: no-repeat; background-position: 0 100%; transition: opacity .25s ease, background-size .35s cubic-bezier(.2,.7,.1,1);
+}
+.hwf-col a:hover, .hwf-up:hover { opacity: 1; background-size: 100% 1px; }
+.hwf-col a:focus-visible, .hwf-up:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; opacity: 1; }
+.hwf-rule {
+  position: relative; z-index: 1; display: flex; justify-content: flex-end; align-items: center; gap: 16px;
+  margin: clamp(18px, 2.6vw, 30px) clamp(20px, 3.4vw, 44px) 0; padding-top: 12px;
+  border-top: 0.5px solid color-mix(in srgb, var(--hwf-ink) 16%, transparent);
+  font-family: var(--hwf-mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+}
+.hwf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 720px) {
+  .hwf-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 18px; }
+  .hwf-brand { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hwf-col a, .hwf-up { transition: none; }
+}
+`
+
+export default function HalftoneWordmarkFooter({
+  wordmark = &quot;halden&quot;,
+  label = &quot;Halden Studio&quot;,
+  meta = &quot;©2026 · Oslo / Lisbon&quot;,
+  columns = DEFAULT_COLUMNS,
+  backToTop = true,
+  preset = &quot;night&quot;,
+  palette,
+  dotGap = 6,
+  radius = 80,
+  crop = 0.2,
+  grain = 0.5,
+  interactive = true,
+  fontFamily = SANS_STACK,
+  fontWeight = 800,
+  monoFamily = MONO_STACK,
+  height = &quot;560px&quot;,
+  className = &quot;&quot;,
+}: HalftoneWordmarkFooterProps) {
+  const colors = { ...(PRESETS[preset] || PRESETS.night), ...(palette || {}) }
+  const rootRef = React.useRef(null as HTMLElement | null)
+  const canvasRef = React.useRef(null as HTMLCanvasElement | null)
+  const opts = React.useRef({ colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark })
+  opts.current = { colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark }
+  const key = [wordmark, dotGap, crop, grain, fontFamily, fontWeight, colors.background, colors.ink, colors.warm].join(&quot;|&quot;)
+
+  React.useEffect(() =&gt; {
+    const root = rootRef.current
+    const canvas = canvasRef.current
+    if (!root || !canvas) return
+    const ctx = canvas.getContext(&quot;2d&quot;)
+    if (!ctx) return
+
+    const reduced = window.matchMedia(&quot;(prefers-reduced-motion: reduce)&quot;).matches
+    let w = 0
+    let h = 0
+    let dpr = 1
+    let px = -1e5
+    let py = -1e5
+    let raf = 0
+    let visible = true
+    let awake = true
+    let ring = { x: 0, y: 0, t: -1 }
+    // Flat arrays: x, y, vx, vy, hx, hy, r per dot.
+    let dots = new Float32Array(0)
+    let count = 0
+    let grainTile = null as HTMLCanvasElement | null
+    const ink = hwfHex(opts.current.colors.ink) || [233, 228, 218]
+    const warm = hwfHex(opts.current.colors.warm) || [233, 118, 43]
+
+    const layout = () =&gt; {
+      const o = opts.current
+      const rect = root.getBoundingClientRect()
+      w = Math.max(1, Math.round(rect.width))
+      h = Math.max(1, Math.round(rect.height))
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = Math.round(w * dpr)
+      canvas.height = Math.round(h * dpr)
+
+      // Set the word once, at a size that fills the width, on a 1x mask.
+      const mask = document.createElement(&quot;canvas&quot;)
+      mask.width = w
+      mask.height = h
+      const m = mask.getContext(&quot;2d&quot;, { willReadFrequently: true })
+      if (!m) return
+      const face = o.fontWeight + &quot; 100px &quot; + o.fontFamily
+      m.font = face
+      const word = o.wordmark || &quot; &quot;
+      const fit = hwfFitSize(m.measureText(word).width, w * 1.02)
+      m.font = o.fontWeight + &quot; &quot; + fit + &quot;px &quot; + o.fontFamily
+      const box = m.measureText(word)
+      const cap = box.actualBoundingBoxAscent || fit * 0.72
+      const c = Math.max(0, Math.min(0.6, o.crop))
+      m.fillStyle = &quot;#000&quot;
+      m.textBaseline = &quot;alphabetic&quot;
+      m.fillText(word, (w - box.width) / 2, h + cap * c)
+      const img = m.getImageData(0, 0, w, h).data
+
+      const gap = Math.max(3, o.dotGap)
+      const cols = Math.ceil(w / gap)
+      const rows = Math.ceil(h / gap)
+      const tmp = []
+      for (let gy = 0; gy &lt; rows; gy++) {
+        for (let gx = 0; gx &lt; cols; gx++) {
+          // Coverage: average alpha over a 3×3 sample of the cell.
+          let sum = 0
+          for (let sy = 0; sy &lt; 3; sy++) {
+            for (let sx = 0; sx &lt; 3; sx++) {
+              const x = Math.min(w - 1, Math.floor(gx * gap + ((sx + 0.5) * gap) / 3))
+              const y = Math.min(h - 1, Math.floor(gy * gap + ((sy + 0.5) * gap) / 3))
+              sum += img[(y * w + x) * 4 + 3]
+            }
+          }
+          const cov = sum / (9 * 255)
+          if (cov &lt; 0.06) continue
+          const hx = gx * gap + gap / 2
+          const hy = gy * gap + gap / 2
+          tmp.push(hx, hy, 0, 0, hx, hy, hwfRadius(cov, gap))
+        }
+      }
+      dots = new Float32Array(tmp)
+      count = tmp.length / 7
+
+      // A fixed tile of print grain, drawn once and laid over every frame.
+      grainTile = document.createElement(&quot;canvas&quot;)
+      grainTile.width = 256
+      grainTile.height = 256
+      const g = grainTile.getContext(&quot;2d&quot;)
+      if (g) {
+        const id = g.createImageData(256, 256)
+        for (let i = 0; i &lt; id.data.length; i += 4) {
+          const v = Math.random() * 255
+          id.data[i] = id.data[i + 1] = id.data[i + 2] = v
+          id.data[i + 3] = Math.random() &lt; 0.5 ? 0 : 255
+        }
+        g.putImageData(id, 0, 0)
+      }
+      awake = true
+    }
+
+    const draw = (now: number) =&gt; {
+      const o = opts.current
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.fillStyle = o.colors.background
+      ctx.fillRect(0, 0, w, h)
+
+      const r = o.interactive &amp;&amp; !reduced ? Math.max(0, o.radius) : 0
+      const ringAge = ring.t &lt; 0 ? 1e9 : now - ring.t
+      const ringR = ringAge * 0.9
+      let moving = false
+      for (let i = 0; i &lt; count; i++) {
+        const j = i * 7
+        let x = dots[j]
+        let y = dots[j + 1]
+        let vx = dots[j + 2]
+        let vy = dots[j + 3]
+        const hx = dots[j + 4]
+        const hy = dots[j + 5]
+        if (!reduced) {
+          if (ringAge &lt; 900) {
+            const dx = hx - ring.x
+            const dy = hy - ring.y
+            const d = Math.sqrt(dx * dx + dy * dy) + 0.001
+            const band = 1 - Math.min(1, Math.abs(d - ringR) / 26)
+            if (band &gt; 0) {
+              const f = band * 3.2 * (1 - ringAge / 900)
+              vx += (dx / d) * f
+              vy += (dy / d) * f
+            }
+          }
+          const s = hwfStep(x, y, vx, vy, hx, hy, px, py, r)
+          x = s[0]
+          y = s[1]
+          vx = s[2]
+          vy = s[3]
+          if (Math.abs(vx) + Math.abs(vy) &gt; 0.02 || Math.abs(x - hx) + Math.abs(y - hy) &gt; 0.05) moving = true
+          else {
+            x = hx
+            y = hy
+            vx = 0
+            vy = 0
+          }
+          dots[j] = x
+          dots[j + 1] = y
+          dots[j + 2] = vx
+          dots[j + 3] = vy
+        }
+        const k = hwfWarmth(x, y, hx, hy, 28)
+        ctx.fillStyle =
+          k &gt; 0.02
+            ? &quot;rgb(&quot; +
+              Math.round(ink[0] + (warm[0] - ink[0]) * k) + &quot;,&quot; +
+              Math.round(ink[1] + (warm[1] - ink[1]) * k) + &quot;,&quot; +
+              Math.round(ink[2] + (warm[2] - ink[2]) * k) + &quot;)&quot;
+            : o.colors.ink
+        ctx.beginPath()
+        ctx.arc(x, y, dots[j + 6], 0, 6.2832)
+        ctx.fill()
+      }
+
+      if (grainTile &amp;&amp; o.grain &gt; 0) {
+        ctx.globalAlpha = Math.min(1, o.grain) * 0.09
+        ctx.globalCompositeOperation = &quot;overlay&quot;
+        const pattern = ctx.createPattern(grainTile, &quot;repeat&quot;)
+        if (pattern) {
+          ctx.fillStyle = pattern
+          ctx.fillRect(0, 0, w, h)
+        }
+        ctx.globalAlpha = 1
+        ctx.globalCompositeOperation = &quot;source-over&quot;
+      }
+      // Sleep once everything is home and nothing is pushing.
+      awake = moving || ringAge &lt; 900 || px &gt; -1e4
+    }
+
+    const loop = (now: number) =&gt; {
+      raf = 0
+      if (!visible) return
+      draw(now)
+      if (awake) raf = requestAnimationFrame(loop)
+    }
+    const wake = () =&gt; {
+      awake = true
+      if (!raf &amp;&amp; visible) raf = requestAnimationFrame(loop)
+    }
+
+    const toLocal = (e: PointerEv) =&gt; {
+      const b = canvas.getBoundingClientRect()
+      return [e.clientX - b.left, e.clientY - b.top]
+    }
+    const onMove = (e: PointerEv) =&gt; {
+      if (!opts.current.interactive) return
+      const p = toLocal(e)
+      px = p[0]
+      py = p[1]
+      wake()
+    }
+    const onLeave = () =&gt; {
+      px = -1e5
+      py = -1e5
+      wake()
+    }
+    const onDown = (e: PointerEv) =&gt; {
+      if (!opts.current.interactive || reduced) return
+      if ((e.target as HTMLElement).closest(&quot;a,button&quot;)) return
+      const p = toLocal(e)
+      ring = { x: p[0], y: p[1], t: performance.now() }
+      wake()
+    }
+
+    layout()
+    draw(performance.now())
+    wake()
+
+    root.addEventListener(&quot;pointermove&quot;, onMove)
+    root.addEventListener(&quot;pointerleave&quot;, onLeave)
+    root.addEventListener(&quot;pointerdown&quot;, onDown)
+    const ro = new ResizeObserver(() =&gt; {
+      layout()
+      wake()
+    })
+    ro.observe(root)
+    const io = new IntersectionObserver((entries) =&gt; {
+      visible = entries[0] ? entries[0].isIntersecting : true
+      if (visible) wake()
+    })
+    io.observe(root)
+    // A web font that lands late re-sets the word in its real face.
+    let alive = true
+    if (document.fonts &amp;&amp; document.fonts.ready) {
+      document.fonts.ready.then(() =&gt; {
+        if (!alive) return
+        layout()
+        wake()
+      })
+    }
+
+    return () =&gt; {
+      alive = false
+      cancelAnimationFrame(raf)
+      ro.disconnect()
+      io.disconnect()
+      root.removeEventListener(&quot;pointermove&quot;, onMove)
+      root.removeEventListener(&quot;pointerleave&quot;, onLeave)
+      root.removeEventListener(&quot;pointerdown&quot;, onDown)
+    }
+  }, [key])
+
+  const toTop = () =&gt; {
+    window.scrollTo({ top: 0, behavior: &quot;smooth&quot; })
+  }
+
+  return (
+    &lt;footer
+      ref={rootRef}
+      className={&quot;hwf-root &quot; + className}
+      style={
+        {
+          height,
+          &quot;--hwf-bg&quot;: colors.background,
+          &quot;--hwf-ink&quot;: colors.ink,
+          &quot;--hwf-mono&quot;: monoFamily,
+        } as React.CSSProperties
+      }
+    &gt;
+      &lt;style&gt;{HWF_CSS}&lt;/style&gt;
+      &lt;canvas ref={canvasRef} aria-hidden=&quot;true&quot; /&gt;
+      &lt;span className=&quot;hwf-sr&quot;&gt;{wordmark}&lt;/span&gt;
+      &lt;div className=&quot;hwf-top&quot;&gt;
+        &lt;div className=&quot;hwf-brand&quot;&gt;
+          &lt;strong&gt;{label}&lt;/strong&gt;
+          &lt;span&gt;{meta}&lt;/span&gt;
+        &lt;/div&gt;
+        {columns.map((col) =&gt; (
+          &lt;nav className=&quot;hwf-col&quot; key={col.title} aria-label={col.title}&gt;
+            &lt;h3&gt;{col.title}&lt;/h3&gt;
+            &lt;ul&gt;
+              {col.links.map((l) =&gt; (
+                &lt;li key={l.label}&gt;
+                  &lt;a href={l.href || &quot;#&quot;}&gt;{l.label}&lt;/a&gt;
+                &lt;/li&gt;
+              ))}
+            &lt;/ul&gt;
+          &lt;/nav&gt;
+        ))}
+      &lt;/div&gt;
+      &lt;div className=&quot;hwf-rule&quot;&gt;
+        {backToTop ? (
+          &lt;button type=&quot;button&quot; className=&quot;hwf-up&quot; onClick={toTop}&gt;
+            Back to top ↑
+          &lt;/button&gt;
+        ) : null}
+      &lt;/div&gt;
+    &lt;/footer&gt;
+  )
+}
+
+type PointerEv = PointerEvent
+</code></pre><p id="405f6172-1d9f-80dd-9d1d-eef092317af8" class="" dir="auto"><br/>7. OVERALL AESTHTIC :<br/>7.1 COLOR PALLET (ATTACHED IMAGE), MAKE SURE USE MUTED COLORS MORE TO KEEP THE OVERALL VIBE CHIC AND CLASSY ,. </p><figure id="405f6172-1d9f-8035-a200-d54f4fd18883" class="image" data-notion-image="Screenshot_2026-10-26_023303.png" dir="ltr"><a href="Screenshot_2026-10-26_023303.png"><img style="width:703.9805908203125px" src="Screenshot_2026-10-26_023303.png"/></a></figure><p id="405f6172-1d9f-8029-99de-fe1c6418717d" class="" dir="auto">7.2 FONTS:</p><p id="405f6172-1d9f-80f4-831a-cb1eb137a7fd" class="" dir="auto">TIMES NEW ROMAN ITALIC , PIXELTA , (AND SMILIAR CLASSY CHIC VIBES FONT)</p><figure id="405f6172-1d9f-80fb-b73f-ff55d6c1130e" class="image" data-notion-image="Screenshot_2026-10-26_141808.png" dir="ltr"><a href="Screenshot_2026-10-26_141808.png"><img style="width:703.9563598632812px" src="Screenshot_2026-10-26_141808.png"/></a></figure><p id="405f6172-1d9f-8054-90bd-c9cba10fdbed" class="" dir="auto">7.3: OVERALL SCROLL ANIMATION COMPOMENT : use this stroke follow component in the whole overall scroll animation again in the colro pallet as default </p><pre id="405f6172-1d9f-80d1-b4a9-c621ea74253c" class="code code-wrap" data-notion-code-syntax="tsx"><code class="language-tsx" style="white-space:pre-wrap;word-break:break-all">&quot;use client&quot;;
+
+import { motion, useScroll, useTransform } from &quot;framer-motion&quot;;
+import React, { useRef } from &quot;react&quot;;
+
+const Skiper19 = () =&gt; {
+  const ref = useRef&lt;HTMLDivElement&gt;(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+  });
+
+  return (
+    &lt;section
+      ref={ref}
+      className=&quot;mx-auto flex h-[350vh] w-screen flex-col items-center overflow-hidden bg-[#FAFDEE] px-4 text-[#1F3A4B]&quot;
+    &gt;
+      &lt;div className=&quot;mt-42 relative flex w-fit flex-col items-center justify-center gap-5 text-center&quot;&gt;
+        &lt;h1 className=&quot;font-jakarta-sans relative z-10 text-7xl font-medium tracking-[-0.08em] lg:text-9xl&quot;&gt;
+          The Stroke &lt;br /&gt; That follows the &lt;br /&gt;
+          Scroll Progress
+        &lt;/h1&gt;
+        &lt;p className=&quot;font-jakarta-sans relative z-10 max-w-2xl text-xl font-medium text-[#1F3A4B]&quot;&gt;
+          Scroll down to see the effect
+        &lt;/p&gt;
+
+        &lt;LinePath
+          className=&quot;absolute -right-[40%] top-0 z-0&quot;
+          scrollYProgress={scrollYProgress}
+        /&gt;
+      &lt;/div&gt;
+
+      &lt;div className=&quot;rounded-4xl font-jakarta-sans w-full translate-y-[200vh] bg-[#1F3A4B] pb-10 text-[#FAFDEE]&quot;&gt;
+        &lt;h1 className=&quot;mt-10 text-center text-[15.5vw] font-bold leading-[0.9] tracking-tighter lg:text-[16.6vw]&quot;&gt;
+          skiperui.com
+        &lt;/h1&gt;
+        &lt;div className=&quot;mt-80 flex w-full flex-col items-start gap-5 px-4 font-medium lg:mt-0 lg:flex-row lg:justify-between&quot;&gt;
+          &lt;div className=&quot;flex w-full items-center justify-between gap-12 uppercase lg:w-fit lg:justify-center&quot;&gt;
+            &lt;p className=&quot;w-fit text-sm&quot;&gt;
+              punjab, india &lt;br /&gt;
+              and online
+            &lt;/p&gt;
+            &lt;p className=&quot;w-fit text-right text-sm lg:text-left&quot;&gt;
+              sep 1, 2025 &lt;br /&gt; the Moosa pind
+            &lt;/p&gt;
+          &lt;/div&gt;
+          &lt;div className=&quot;flex w-full flex-wrap items-center justify-between gap-12 uppercase lg:w-fit lg:justify-center&quot;&gt;
+            &lt;p className=&quot;w-fit text-sm&quot;&gt;
+              onilne &lt;br /&gt; free
+            &lt;/p&gt;
+            &lt;p className=&quot;w-fit text-right text-sm lg:text-left&quot;&gt;
+              in person tickets &lt;br /&gt; $600
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+};
+
+export { Skiper19 };
+
+const LinePath = ({
+  className,
+  scrollYProgress,
+}: {
+  className: string;
+  scrollYProgress: any;
+}) =&gt; {
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
+
+  return (
+    &lt;svg
+      width=&quot;1278&quot;
+      height=&quot;2319&quot;
+      viewBox=&quot;0 0 1278 2319&quot;
+      fill=&quot;none&quot;
+      overflow=&quot;visible&quot;
+      xmlns=&quot;http://www.w3.org/2000/svg&quot;
+      className={className}
+    &gt;
+      &lt;motion.path
+        d=&quot;M876.605 394.131C788.982 335.917 696.198 358.139 691.836 416.303C685.453 501.424 853.722 498.43 941.95 409.714C1016.1 335.156 1008.64 186.907 906.167 142.846C807.014 100.212 712.699 198.494 789.049 245.127C889.053 306.207 986.062 116.979 840.548 43.3233C743.932 -5.58141 678.027 57.1682 672.279 112.188C666.53 167.208 712.538 172.943 736.353 163.088C760.167 153.234 764.14 120.924 746.651 93.3868C717.461 47.4252 638.894 77.8642 601.018 116.979C568.164 150.908 557 201.079 576.467 246.924C593.342 286.664 630.24 310.55 671.68 302.614C756.114 286.446 729.747 206.546 681.86 186.442C630.54 164.898 492 209.318 495.026 287.644C496.837 334.494 518.402 366.466 582.455 367.287C680.013 368.538 771.538 299.456 898.634 292.434C1007.02 286.446 1192.67 309.384 1242.36 382.258C1266.99 418.39 1273.65 443.108 1247.75 474.477C1217.32 511.33 1149.4 511.259 1096.84 466.093C1044.29 420.928 1029.14 380.576 1033.97 324.172C1038.31 273.428 1069.55 228.986 1117.2 216.384C1152.2 207.128 1188.29 213.629 1194.45 245.127C1201.49 281.062 1132.22 280.104 1100.44 272.673C1065.32 264.464 1044.22 234.837 1032.77 201.413C1019.29 162.061 1029.71 131.126 1056.44 100.965C1086.19 67.4032 1143.96 54.5526 1175.78 86.1513C1207.02 117.17 1186.81 143.379 1156.22 166.691C1112.57 199.959 1052.57 186.238 999.784 155.164C957.312 130.164 899.171 63.7054 931.284 26.3214C952.068 2.12513 996.288 3.87363 1007.22 43.58C1018.15 83.2749 1003.56 122.644 975.969 163.376C948.377 204.107 907.272 255.122 913.558 321.045C919.727 385.734 990.968 497.068 1063.84 503.35C1111.46 507.456 1166.79 511.984 1175.68 464.527C1191.52 379.956 1101.26 334.985 1030.29 377.017C971.109 412.064 956.297 483.647 953.797 561.655C947.587 755.413 1197.56 941.828 936.039 1140.66C745.771 1285.32 321.926 950.737 134.536 1202.19C-6.68295 1391.68 -53.4837 1655.38 131.935 1760.5C478.381 1956.91 1124.19 1515 1201.28 1997.83C1273.66 2451.23 100.805 1864.7 303.794 2668.89&quot;
+        stroke=&quot;#C2F84F&quot;
+        strokeWidth=&quot;20&quot;
+        style={{
+          pathLength,
+          strokeDashoffset: useTransform(pathLength, (value) =&gt; 1 - value),
+        }}
+      /&gt;
+    &lt;/svg&gt;
+  );
+};
+
+/**
+ * Skiper 19 — React + framer motion
+ * Inspired by and adapted from https://comgio.ai/
+ * We respect the original creators. This is an inspired rebuild with our own taste and does not claim any ownership.
+ * These animations aren’t associated with the comgio.ai . They’re independent recreations meant to study interaction design
+ *
+ * License &amp; Usage:
+ * - Free to use and modify in both personal and commercial projects.
+ * - Attribution to Skiper UI is required when using the free version.
+ * - No attribution required with Skiper UI Pro.
+ *
+ * Feedback and contributions are welcome.
+ *
+ * Author: @gurvinder-singh02
+ * Website: https://gxuri.me
+ * Twitter: https://x.com/Gur__vi
+ */
+</code></pre><p id="405f6172-1d9f-8089-9ebc-df808cccfa3a" class="" dir="auto">7.4use this ribbion component once as a devide and represent a tagline inside that ribbion component</p><pre id="405f6172-1d9f-8097-81aa-f24b597a76d5" class="code code-wrap" data-notion-code-syntax="tsx"><code class="language-tsx" style="white-space:pre-wrap;word-break:break-all"># Ribbon Type
+
+Text printed on satin ribbons that twist and wave through 3D space
+
+- Type: React Bits Pro component
+- Category: Text
+- Docs: https://pro.reactbits.dev/docs/components/ribbon-type
+- Registry item: @reactbits-starter/ribbon-type-tw
+
+## Installation
+
+```bash
+npx shadcn@latest add @reactbits-starter/ribbon-type-tw
+```
+
+Requires a React Bits Pro license key and the @reactbits-starter registry configured in components.json. Setup guide: https://pro.reactbits.dev/docs/installation
+</code></pre><p id="405f6172-1d9f-80c5-b3b4-f3c27fd6d359" class="" dir="auto">7.5:<br/>page loading animation <br/></p><pre id="406f6172-1d9f-8000-855b-dcabe97ad6b1" class="code code-wrap" data-notion-code-syntax="tsx"><code class="language-tsx" style="white-space:pre-wrap;word-break:break-all">&quot;use client&quot;;
+
+import { AnimatePresence, motion } from &quot;framer-motion&quot;;
+import { useCallback, useEffect, useMemo, useState } from &quot;react&quot;;
+
+const useLoop = (delay = 1000) =&gt; {
+  const [key, setKey] = useState(0);
+
+  const incrementKey = useCallback(() =&gt; {
+    setKey((prev) =&gt; prev + 1);
+  }, []);
+
+  useEffect(() =&gt; {
+    const interval = setInterval(incrementKey, delay);
+    return () =&gt; clearInterval(interval);
+  }, [delay, incrementKey]);
+
+  return { key };
+};
+
+export { useLoop };
+
+const Skiper62 = () =&gt; {
+  const { key } = useLoop();
+
+  const array = useMemo(
+    () =&gt; [
+      &quot;Tik-Tik uno&quot;,
+      &quot;Tik-Tik dos&quot;,
+      &quot;Tik-Tik tres&quot;,
+      &quot;Tik-Tik cuatro&quot;,
+      &quot;Tik-Tik cinco&quot;,
+      &quot;Tik-Tik seis&quot;,
+      &quot;Tik-Tik siete&quot;,
+      &quot;Tik-Tik ocho&quot;,
+      &quot;Tik-Tik nueve&quot;,
+      &quot;Tik-Tik diez&quot;,
+    ],
+    [],
+  );
+
+  const currentItem = useMemo(() =&gt; {
+    return array[key % array.length];
+  }, [array, key]);
+
+  return (
+    &lt;div className=&quot;flex flex-col items-center justify-center gap-8 p-8&quot;&gt;
+      &lt;div className=&quot;mb-20 grid content-start justify-items-center gap-6 text-center&quot;&gt;
+        &lt;span className=&quot;after:to-foreground relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-transparent after:content-[&#x27;&#x27;]&quot;&gt;
+          useLoop hook
+        &lt;/span&gt;
+      &lt;/div&gt;
+      &lt;AnimatePresence mode=&quot;popLayout&quot;&gt;
+        &lt;motion.h1
+          key={key}
+          initial={{ opacity: 0, y: &quot; 100%&quot; }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: &quot;-100%&quot; }}
+          transition={{ duration: 0.3 }}
+          className=&quot;bordr whitespace-nowrap text-center&quot;
+        &gt;
+          {currentItem}
+        &lt;/motion.h1&gt;
+      &lt;/AnimatePresence&gt;
+    &lt;/div&gt;
+  );
+};
+
+export { Skiper62 };
+</code></pre><p id="406f6172-1d9f-80ac-8515-c0da20f91afa" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

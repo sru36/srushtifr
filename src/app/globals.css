@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --font-pixelta: var(--font-pixelta), "Pixelta", monospace;
+}
+
+@layer base {
+  :root {
+    --palette-mauve:       #9d5d74;
+    --palette-mauve-deep:  #894c62;
+    --palette-mauve-dark:  #7a3f54;
+    --palette-charcoal:    #1d1b1e;
+    --palette-raspberry:   #db4876;
+    --palette-black:       #0d0c0e;
+    --palette-ivory:       #faf7f5;
+    --palette-blush:       #f7c2d1;
+    --palette-muted-rose:  #e6a3b6;
+    --palette-soft-bg:     #1d1b1e;
+
+    --bg:             #0d0c0e;
+    --bg-alt:         #1d1b1e;
+    --surface:        rgba(255, 255, 255, 0.05);
+    --surface-card:   #1d1b1e;
+    --text:           #faf7f5;
+    --text-muted:     rgba(250, 247, 245, 0.78);
+    --border:         rgba(255, 255, 255, 0.12);
+    --border-strong:  rgba(255, 255, 255, 0.22);
+    --nav-bg:         rgba(13, 12, 14, 0.88);
+    --hero-bg:        #0d0c0e;
+    --hero-text:      #faf7f5;
+  }
+}
+
+@font-face {
+  font-family: "Pixelta";
+  src: url("/fonts/Pixelta.ttf") format("truetype");
+  font-display: swap;
+}
+
+.font-pixel,
+.font-pixelta {
+  font-family: var(--font-pixelta), "Pixelta", monospace !important;
+}
+
+.font-hand {
+  font-family: var(--font-hand), "Gochi Hand", "Patrick Hand", cursive, sans-serif !important;
+}
+
+.font-serif {
+  font-family: var(--font-serif), Georgia, serif !important;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace !important;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Paper Cutout Clip Paths */
+.clip-paper-jagged {
+  clip-path: polygon(
+    0% 6%, 5% 0%, 12% 5%, 19% 1%, 27% 6%, 35% 0%, 44% 5%, 52% 0%,
+    61% 6%, 70% 1%, 79% 7%, 88% 0%, 96% 5%, 100% 2%,
+    100% 95%, 94% 100%, 86% 94%, 78% 100%, 69% 95%, 60% 100%, 51% 94%,
+    42% 100%, 33% 95%, 24% 100%, 15% 94%, 7% 100%, 0% 95%
+  );
+}
+
+.clip-photo-torn {
+  clip-path: polygon(
+    0% 8%, 4% 0%, 11% 6%, 18% 1%, 25% 7%, 33% 0%, 41% 5%, 50% 0%,
+    58% 5%, 67% 0%, 75% 6%, 83% 1%, 91% 7%, 97% 0%, 100% 5%,
+    100% 93%, 95% 100%, 87% 94%, 79% 100%, 70% 94%, 62% 100%, 53% 95%,
+    45% 100%, 36% 94%, 27% 100%, 19% 94%, 11% 100%, 5% 93%, 0% 100%
+  );
+}
+
+/* Swiper custom styles for coverflow */
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  border-radius: 16px;
+}
+
+/* Achievements Swiper Pink Pagination Bullets */
+#achievements .swiper-pagination-bullet,
+.achievements-swiper .swiper-pagination-bullet {
+  background: #f7c2d1 !important;
+  opacity: 0.35 !important;
+  width: 8px !important;
+  height: 8px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+}
+
+#achievements .swiper-pagination-bullet:hover,
+.achievements-swiper .swiper-pagination-bullet:hover {
+  opacity: 0.75 !important;
+  transform: scale(1.2);
+}
+
+#achievements .swiper-pagination-bullet-active,
+.achievements-swiper .swiper-pagination-bullet-active {
+  background: #db4876 !important;
+  opacity: 1 !important;
+  width: 26px !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 0 12px rgba(219, 72, 118, 0.85), 0 0 4px #f7c2d1 !important;
+}
